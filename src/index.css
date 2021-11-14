@@ -1,13 +1,88 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body{
+    height: 100vh;
+    width: 100vw;
+    background-color: rgb(206, 214, 214);
 }
+
+.keys {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 500px;
+    margin: auto;
+    margin-top: 10%;
+    column-gap: 20px;
+    row-gap: 20px;
+}
+.key{
+    border: 1px solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    height: 80px;
+    box-shadow: 3px 6px 2px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    font-weight: 900;
+    animation: keyAnimations 1s;
+    animation-iteration-count: 1;
+}
+
+@keyframes keyAnimations {
+    to{transform: rotateY(360deg);};
+}
+
+.key:hover{
+    background-color: cornflowerblue;
+    box-shadow: 3px 6px 2px rgba(0, 0, 0, 0.5);
+}
+#title{
+    margin-bottom: -100px;
+    margin-top: 20px;
+    color: darkblue;
+    text-align: center;
+}
+.key:active{
+    background-color: darkblue;
+}
+@media (max-width: 625px) {
+    .keys{
+        width: 90%;
+    }
+    #title{
+        margin-bottom: 10px;
+    }
+}
+
+.switchButton{
+    padding: 13px;
+    width: 100px;
+    border-top: 1px solid;
+    border-radius: 5px;
+    font-size: 18px;
+}
+#volumeRange{
+    margin: 30px 0 0 10px;
+}
+.powerButton{
+padding: 13px;
+width: 100px;
+border-top: 1px solid;
+border-radius: 5px;
+font-size: 18px;
+}
+
+.powerButton:hover{
+    background-color: rgb(161, 210, 231);
+}
+.switchButton:hover{
+    background-color: rgb(161, 210, 231);
+}
+
+
+
