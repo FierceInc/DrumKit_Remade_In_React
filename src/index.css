@@ -7,7 +7,7 @@
 body{
     height: 100vh;
     width: 100vw;
-    background-color: rgb(206, 214, 214);
+    background-color: rgb(22, 162, 255);
 }
 
 .keys {
@@ -20,7 +20,7 @@ body{
     row-gap: 20px;
 }
 .key{
-    border: 1px solid;
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -30,7 +30,9 @@ body{
     border-radius: 4px;
     font-weight: 900;
     animation: keyAnimations 1s;
-    animation-iteration-count: 1;
+    animation-iteration-count: 2;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    cursor: pointer;
 }
 
 @keyframes keyAnimations {
@@ -38,14 +40,16 @@ body{
 }
 
 .key:hover{
-    background-color: cornflowerblue;
+    background-color: rgb(0, 58, 165);
     box-shadow: 3px 6px 2px rgba(0, 0, 0, 0.5);
+    color: white;
 }
 #title{
     margin-bottom: -100px;
     margin-top: 20px;
-    color: darkblue;
+    color: rgb(0, 0, 0);
     text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .key:active{
     background-color: darkblue;
@@ -62,12 +66,17 @@ body{
 .switchButton{
     padding: 13px;
     width: 100px;
-    border-top: 1px solid;
+    border: none;
     border-radius: 5px;
     font-size: 18px;
+    cursor: pointer;
 }
 #volumeRange{
-    margin: 30px 0 0 10px;
+    margin: 10px 0 0 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.volumeName{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .powerButton{
 padding: 13px;
@@ -75,13 +84,15 @@ width: 100px;
 border-top: 1px solid;
 border-radius: 5px;
 font-size: 18px;
+border: none;
+cursor: pointer;
 }
 
 .powerButton:hover{
-    background-color: rgb(161, 210, 231);
+    background-color: rgb(0, 150, 214);
 }
 .switchButton:hover{
-    background-color: rgb(161, 210, 231);
+    background-color: rgb(0, 150, 214);
 }
 
 

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import "./index.css";
 import DrumPadsA from './DrumPadsA';
 import { bankOne, bankTwo } from './SoundBanks';
-
+ 
 
 class DrumKit extends Component {
   constructor(props) {
@@ -15,7 +15,8 @@ class DrumKit extends Component {
       volume: '',
       clicked: false,
       soundBank: 1,
-      playable: true
+      playable: true,
+      DID: []
      };
      this.handlePlay = this.handlePlay.bind(this)
      this.handleBank = this.handleBank.bind(this)
@@ -29,30 +30,48 @@ class DrumKit extends Component {
       volume: value
     })
   }
-
+componentsWillUnmount() {
+document.removeEventListener("keyup") 
+}
   componentDidMount(){
     var keyPressed;
     document.addEventListener('keyup', (event) => {
     if(this.state.playable && this.state.power === "On") {
-     keyPressed = event.key.toUpperCase();
-     if(this.state.soundBank === "" || this.state.soundBank === 1) {
-      bankOne.forEach(key => {
-        var audio = new Audio(key.url)
-        if(keyPressed === key.keyTrigger) {
-          audio.play()
-          audio.volume = this.state.volume / 100
-        }
-      })
-    }
-    else if(this.state.soundBank === 2) {
-      bankTwo.forEach(key => {
-        var audio = new Audio(key.url)
-        if(keyPressed === key.keyTrigger) {
-          audio.play()
-          audio.volume = this.state.volume / 100
-        }
-      })
-    }
+      keyPressed = event.key.toUpperCase();
+      if(this.state.soundBank === "" || this.state.soundBank === 1) {
+        bankOne.forEach((key, index) => {
+          var audio = document.querySelectorAll(".clip")
+          audio[index].id = key.keyTrigger
+          audio[index].src = key.url
+          this.setState({
+            DID: [key.id]
+          })
+          if(keyPressed === key.keyTrigger) {
+            audio[index].play()
+            audio[index].volume = this.state.volume / 100
+             this.setState({
+            title: key.id
+          })
+          }
+        })
+      }
+      else if(this.state.soundBank === 2) {
+        bankTwo.forEach((key, index) => {
+          var audio = document.querySelectorAll(".clip")
+          audio[index].id = key.keyTrigger
+          audio[index].src = key.url
+           this.setState({
+            DID: [key.id]
+          })
+          if(keyPressed === key.keyTrigger) {
+            audio[index].play()
+            audio[index].volume = this.state.volume / 100
+             this.setState({
+            title: key.id
+          })
+          }
+        })
+      } 
   }
    });
     var vol = document.getElementById('volumeRange').value = 10
@@ -82,36 +101,54 @@ class DrumKit extends Component {
   const value = e.target.innerText
   if(this.state.playable) {
     if(this.state.soundBank === "" || this.state.soundBank === 1) {
-      bankOne.forEach(key => {
-        var audio = new Audio(key.url)
-        if(value === key.keyTrigger) {
-          audio.play()
-          audio.volume = this.state.volume / 100
-        }
+      bankOne.forEach((key, index) => {
+        var audio = document.querySelectorAll(".clip")
+          audio[index].id = key.keyTrigger
+          audio[index].src = key.url
+           this.setState({
+            DID: [key.id]
+          })
+          if(value === key.keyTrigger) {
+            audio[index].play()
+            audio[index].volume = this.state.volume / 100
+             this.setState({
+            title: key.id
+          })
+          }
       })
     }
     else if(this.state.soundBank === 2) {
-      bankTwo.forEach(key => {
-        var audio = new Audio(key.url)
+      bankTwo.forEach((key, index) => {
+        var audio = document.querySelectorAll(".clip")
+        audio[index].id = key.keyTrigger
+        audio[index].src = key.url
+        this.setState({
+            DID: [key.id]
+          })
         if(value === key.keyTrigger) {
-          audio.play()
-          audio.volume = this.state.volume / 100
+          audio[index].play()
+          audio[index].volume = this.state.volume / 100
+          this.setState({
+            title: key.id
+          })
         }
       })
-    }
+    } 
   }
   }
  handlePower() {
   if(this.state.power !== "On") {
     this.setState({
       playable: true,
-      power: "On"
+      power: "On",
+      volume: document.getElementById('volumeRange').value = 10
     })
   }
   else{
      this.setState({
       playable: false,
-      power: "Off"
+      power: "Off",
+      volume: document.getElementById('volumeRange').value = 0
     })
   }
  }
@@ -119,14 +156,15 @@ class DrumKit extends Component {
 
   render() {
     return (
-      <div style={{width:"100vw"}}>
-      <h1 id="title">{this.state.title}</h1>
-      <DrumPadsA keypress={this.handlePlay}/>
-      <div style={{display:"flex", justifyContent:"space-around", margin:"20px auto", width:"500px"}}>
-           <button className="powerButton" onClick={this.handlePower}>{this.state.power}</button> 
+      <div style={{width:"100vw"}} id="drum-machine">
+      <h1 id="display" >{this.state.title}</h1>
+      <DrumPadsA keypress={this.handlePlay}
+       ID={this.state.DID.map(id => id)}/>
+      <div style={{display:"flex", justifyContent:"space-around", margin:"20px auto", width:"500px"}} >
+           <button className="powerButton" style={this.state.power === "Off" ? {background: "rgb(245, 57, 57)" } : {background: "white"}} onClick={this.handlePower}>{this.state.power}</button> 
        <button className="switchButton" onClick={this.handleBank}>{this.state.bankSwitch}</button>
        <div style={{display:"flex", justifyContent:"center", flexDirection:"column", alignItems:"flex-start"}}>
-         <h6>Volume {this.state.volume}</h6>
+         <h4 className="volumeName">Volume {this.state.volume}</h4>
          <input type="range" name="volume" id="volumeRange" onChange={this.handleVolume} />
        </div>
        
